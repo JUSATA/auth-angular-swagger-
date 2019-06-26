@@ -1,0 +1,74 @@
+<app-header></app-header>
+<div class="well">
+  <div>
+    <div class="card-header "  ></div>
+    <div class="card bg-dark text-white">Formulario Clientes {{cliente[0]?.firstname}}</div>
+    <div class="card-header">
+      <form>
+
+      </form>
+        <form class="form-horizontal" name="nameForm" [formGroup]="nameForm" (ngSubmit)="save(nameForm.value, nameForm.valid)" novalidate>
+          <div  class="form-group" [ngClass]="{ 'has-error': !nameForm.controls.firstname.pristine && !nameForm.controls.firstname.valid }">
+            <label for="firstname" class="control-label">firstname</label>
+              <input value="{{cliente[0]?.firstname}}" class="form-control" name="firstname" placeholder="firstname"  ng-pattern ="/^[a-zA-Z\s]*$/" type="text"  formControlName="firstname"
+              required minlength="2" />
+            <span [hidden]="nameForm.controls.firstname.valid || (nameForm.controls.firstname.pristine && !submitted)" class="text-danger">
+            First name is required (minimum 2 characters).
+            </span>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': !nameForm.controls.lastname.pristine && !nameForm.controls.lastname.valid }">
+            <label for="lastname" class="control-label">Last name</label>
+              <input   value={{cliente[0]?.lastname}} type="text" class="form-control" name="lastname" placeholder="Last name" formControlName="lastname"
+              required minlength="2" />
+            <span [hidden]="nameForm.controls.lastname.valid || (nameForm.controls.lastname.pristine && !submitted)" class="text-danger">
+            Last name is required (minimum 2 characters).
+            </span>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': !nameForm.controls.email.pristine && !nameForm.controls.email.valid }">
+            <label for="email" class="control-label">Your e-mail address</label>
+              <input value={{cliente[0]?.email}} type="email" class="form-control" name="email" placeholder="E-mail address" formControlName="email"
+              required />
+            <span [hidden]="nameForm.controls.email.valid || (nameForm.controls.email.pristine && !submitted)" class="text-danger">
+            Valid e-mail address required
+            </span>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': !nameForm.controls.emailrepeat.pristine && !nameForm.controls.emailrepeat.valid }">
+            <label for="emailrepeat" class="control-label">Your e-mail address (repeat)</label>
+              <input  value={{cliente[0]?.emailrepeat}} type="email" class="form-control" name="emailrepeat" placeholder="E-mail address again" formControlName="emailrepeat" required />
+              <span [hidden]="(nameForm.controls.email.valid && nameForm.controls.emailrepeat.value == nameForm.controls.email.value) || (nameForm.controls.emailrepeat.pristine && !submitted)" class="error">
+            E-mail addresses must match
+            </span>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': !nameForm.controls.password.pristine && !nameForm.controls.password.valid }">
+            <label for="passsword" class="control-label">Password</label>
+              <input [(ngModel)]='passsword' id="passsword" value={{cliente[0]?.passsword}} type="password" class="form-control" name="password" formControlName="password"
+              minlength="5" required />
+            <span [hidden]="nameForm.controls.password.valid || (nameForm.controls.password.pristine && !submitted)" class="error">
+            Password is required (minimum 5 characters)
+            </span>
+          </div>
+          <div class="form-group" [ngClass]="{ 'has-error': !nameForm.controls.passwordrepeat.pristine && !nameForm.controls.passwordrepeat.valid }">
+            <label for="repeatpasssword" class="control-label">Password (repeat)</label>
+              <input [(ngModel)]='passwordrepeat' id="passwordrepeat" value={{cliente[0]?.passwordrepeat}}  type="password" class="form-control" name="passwordrepeat" formControlName="passwordrepeat"
+              required />
+            <span [hidden]="(nameForm.controls.passwordrepeat.valid && nameForm.controls.passwordrepeat.value == nameForm.controls.password.value) || (nameForm.controls.passwordrepeat.pristine && !submitted)" class="error">
+            Passwords must match
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="postcode" class="control-label">Postcode</label>
+              <input [(ngModel)]='postcode' id="postcode" value={{cliente[0]?.postcode}} type="number" class="form-control" name="postcode" placeholder="E.g. 2000" formControlName="postcode"
+              />
+          </div>
+          <div class="form-group row">
+              <div class="col-sm-6">
+                <button class="btn btn-primary"   (click)='create()' *ngIf="!cliente[0]?.ID else elseBlock " >Crear</button>
+      
+                <ng-template #elseBlock>
+                  <button  class="btn btn-info" (click)='update()' >Editar</button>
+                </ng-template>
+              </div>
+            </div>
+        </form>
+      </div> 
+  </div></div>
